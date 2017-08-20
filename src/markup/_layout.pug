@@ -1,0 +1,15 @@
+doctype html
+html(lang="ja" ,dir="ltr")
+  head
+    block meta
+    block title
+    link(rel='stylesheet' href='./assets/styles/style.css')
+  body
+    block vars
+    #wrap.wrap
+      block header
+      block content
+      block footer
+
+    script(src="./assets/scripts/main.js")
+    block script

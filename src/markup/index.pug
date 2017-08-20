@@ -1,0 +1,36 @@
+extends _layout
+block meta
+  meta(http-equiv="content-type", content="text/html; charset=utf-8")
+  meta(name="description", content="")
+  meta(name="keywords",content="")
+  meta(name='viewport', content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no')
+block title
+  title carousel slider
+
+block header
+
+block content
+  - var i = 0;
+  div.Carousel
+    div.Carousel-container
+      ul#js-carousel-list.Carousel-list(aria-live="polite")
+        while i < 3
+          if i === 0
+            li.js-carousel-item.st-active.Carousel-item(aria-hidden="true" tabindex="-1")
+              img.Carousel-image(src="https://source.unsplash.com/random" alt="")
+          else
+            li.js-carousel-item.Carousel-item(aria-hidden="true" tabindex="-1")
+              img.Carousel-image(src="https://source.unsplash.com/random" alt="")
+          - i++
+
+      button#js-carousel-left-button.Carousel-button.__left(aria-label="前へ") 前へ
+      button#js-carousel-right-button.Carousel-button.__right(aria-label="次へ") 次へ
+
+      - var ii = 0;
+      ul.Carousel-dots(role="tablist")
+        while ii < 3
+          li.Carousel-dot(role="presentation" aria-hidden="true" tabindex="-1")
+            - ii++
+            button.Carousel-dot-button #{ii}
+
+block footer
