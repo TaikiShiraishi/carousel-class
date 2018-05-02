@@ -5,12 +5,11 @@
       {
         "target": {
           "browsers": ["> 5% in JP"]
-      },
-      "modules": false,
-      "useBuiltIns": true
+        },
+        "modules": false,
+        "useBuiltIns": true
       }
     ]
   ],
-  "plugins": [
-    "transform-runtime"
-  ]
+  "plugins": ["transform-runtime"]
+}
