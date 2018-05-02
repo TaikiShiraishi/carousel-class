@@ -1,22 +1,20 @@
-"use strict";
-
 class Carousel {
   constructor(config) {
-    this._list = document.getElementById("js-carousel-list");
-    this._prevButton = document.getElementById("js-carousel-right-button");
-    this._leftButton = document.getElementById("js-carousel-left-button");
-    this._items = document.querySelectorAll(".js-carousel-item");
-    this._config = config || {};
-    this._count = 0;
-    this._init();
+    this.list = document.getElementById("js-carousel-list");
+    this.prevButton = document.getElementById("js-carousel-right-button");
+    this.leftButton = document.getElementById("js-carousel-left-button");
+    this.items = document.querySelectorAll(".js-carousel-item");
+    this.config = config || {};
+    this.count = 0;
+    this.init();
   }
 
   // 時間で進む
 
   // 右ボタンクリックで進む
-  _prevButtonClick() {
-    this._count -= 1;
-    this._animteSlide("right");
+  prevButtonClick() {
+    this.count -= 1;
+    this.animteSlide("right");
   }
 
   // 左ボタンクリックで戻る
@@ -26,27 +24,41 @@ class Carousel {
    * @param {String} direction - 進行方向
    * @param {Number} element - 何番目のアイテムを表示するか
    */
-  _animteSlide(direction, element) {
-    const activeElement = "hoge";
-    const nextElement = "foo";
-    // 最後だったら最初に戻る
-    // 最初だったら最後に進む
+  // animteSlide(direction, element) {
+  // const activeElement = "hoge";
+  // const nextElement = "foo";
+  // 最後だったら最初に戻る
+  // 最初だったら最後に進む
+  // }
+
+  // ループ用の複製を作る
+  addClone() {
+    const fragment = document.createDocumentFragment();
+    const { items } = this;
+    Object.keys(items).forEach(key => {
+      const clone = items[key].cloneNode(true);
+      fragment.appendChild(clone);
+    });
+    this.list.appendChild(fragment);
   }
 
   start() {
-    this._handleEvent();
+    this.handleEvent();
   }
 
-  stop() {}
+  // stop() {}
 
-  _handleEvent() {
-    this._prevButton.addEventListener("click");
+  handleEvent() {
+    this.prevButton.addEventListener("click");
   }
 
-  _setBind() {}
+  static setBind() {
+    console.log("bind");
+  }
 
-  _init() {
-    this._setBind();
+  init() {
+    // this.setBind();
+    this.addClone();
   }
 }
 
