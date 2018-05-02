@@ -20,35 +20,25 @@
     "start": "npm-run-all clean copy dev",
     "release": "npm-run-all clean production",
     "mkdir": "node ./helpers/mkdir.js",
-    "dev":
-      "cross-env NODE_ENV=$npm_package_config_development npm-run-all --parallel dev:* server",
+    "dev": "cross-env NODE_ENV=$npm_package_config_development npm-run-all --parallel dev:* server",
     "dev:pug": "npm-run-all pug watch-pug",
     "dev:style": "npm-run-all stylecompile watch-sass",
-    "dev:script":
-      "webpack --config webpack.config.js -d --progress --watch --display-error-details",
-    "production":
-      "cross-env NODE_ENV=$npm_package_config_production npm-run-all production:*",
+    "dev:script": "webpack --config webpack.config.js -d --progress --watch --display-error-details",
+    "production": "cross-env NODE_ENV=$npm_package_config_production npm-run-all production:*",
     "production:pug": "npm-run-all pug",
     "production:style": "npm-run-all nodesass:production postcss",
     "production:script": "webpack --config webpack.config.js -p --progress",
-    "pug":
-      "pug $npm_package_config_markup/*.pug --out $npm_package_config_build --pretty --obj $npm_package_config_pugData/data.json",
-    "postcss":
-      "postcss $npm_package_config_build/assets/styles/**/*.css --config postcss.config.js --dir $npm_package_config_build/assets/styles/",
-    "nodesass:dev":
-      "node-sass --source-map-contents true --output-style expanded --source-comments true $npm_package_config_styles/main.scss $npm_package_config_build/assets/styles/main.css",
-    "nodesass:production":
-      "node-sass $npm_package_config_styles/*.scss --output $npm_package_config_build/assets/styles/ --source-map-contents false --output-style compressed --source-comments false",
+    "pug": "pug $npm_package_config_markup/*.pug --out $npm_package_config_build --pretty --obj $npm_package_config_pugData/data.json",
+    "postcss": "postcss $npm_package_config_build/assets/styles/**/*.css --config postcss.config.js --dir $npm_package_config_build/assets/styles/",
+    "nodesass:dev": "node-sass --source-map-contents true --output-style expanded --source-comments true $npm_package_config_styles/main.scss $npm_package_config_build/assets/styles/main.css",
+    "nodesass:production": "node-sass $npm_package_config_styles/*.scss --output $npm_package_config_build/assets/styles/ --source-map-contents false --output-style compressed --source-comments false",
     "stylecompile": "npm-run-all nodesass:dev postcss",
     "watch-pug": "nodemon -e pug -x \"npm run pug\"",
     "watch-sass": "nodemon -e scss -x \"npm run stylecompile\"",
-    "dev:watch-images":
-      "nodemon --ignore $npm_package_config_build --ignore $npm_package_config_meida/_symbol -e png,jpg,gif,svg,ico -x \"npm run copy\"",
-    "server":
-      "browser-sync start --server $npm_package_config_build --files $npm_package_config_build --port 8000 --open external --reload-delay 200 --no-ghost-mode false",
+    "dev:watch-images": "nodemon --ignore $npm_package_config_build --ignore $npm_package_config_meida/_symbol -e png,jpg,gif,svg,ico -x \"npm run copy\"",
+    "server": "browser-sync start --server $npm_package_config_build --files $npm_package_config_build --port 8000 --open external --reload-delay 200 --no-ghost-mode false",
     "clean": "rimraf $npm_package_config_build",
-    "copy":
-      "cpx \"src/assets/**/*.{png,jpg,gif,svg,ico}\" $npm_package_config_build/assets",
+    "copy": "cpx \"src/assets/**/*.{png,jpg,gif,svg,ico}\" $npm_package_config_build/assets",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -91,7 +81,8 @@
     "touch": "^3.1.0",
     "uglify-save-license": "^0.4.1",
     "uglifyjs-webpack-plugin": "^1.2.4",
-    "webpack": "^4.4.1"
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.1.2"
   },
   "dependencies": {}
 }
