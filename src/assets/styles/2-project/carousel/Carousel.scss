@@ -9,6 +9,8 @@
 
   &-container {
     position: relative;
+    width: 500px;
+    margin: 0 auto;
   }
 
   &-list {
@@ -46,12 +48,12 @@
     border: {
       width: 0;
       radius: 50%;
-    };
+    }
     background: {
       color: lightgray;
     }
     font: {
-      size: 0
+      size: 0;
     }
 
     &.__left {
@@ -78,7 +80,6 @@
   }
 
   &-dot {
-
     &-button {
       position: relative;
       appearance: none;
@@ -109,7 +110,7 @@
         }
         line-height: 20px;
         text-align: center;
-        content: '';
+        content: "";
       }
     }
   }
