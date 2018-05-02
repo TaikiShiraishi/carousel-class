@@ -1,9 +1,7 @@
-'use strict'
-
-import registerCarousel from './modules/carousel/registerCarousel.js'
+import registerCarousel from "./modules/carousel/registerCarousel";
 
 function init() {
-  registerCarousel
+  registerCarousel();
 }
 
-document.addEventListener('DOMContentLoaded', init, false)
+document.addEventListener("DOMContentLoaded", init, false);
