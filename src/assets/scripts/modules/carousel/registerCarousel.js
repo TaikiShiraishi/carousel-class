@@ -1,9 +1,8 @@
-'use strict'
-
-import Carousel from './Carousel.js'
+import Carousel from "./Carousel";
 
 function registerCarousel() {
-  new Carousel()
+  const carousel = new Carousel();
+  carousel.init();
 }
 
-export default registerCarousel()
+export default registerCarousel;
