@@ -25,15 +25,17 @@ module.exports = {
       "~assets": join(srcPath, "assets")
     }
   },
+  mode: isProduction ? "production" : "development",
   plugins: [
     new UglifyJSPlugin({
-      beautify: !isProduction,
-      mangle: false,
-      compress: isProduction,
       sourceMap: !isProduction,
       uglifyOptions: {
         output: {
           comments: isProduction ? uglifySaveLicense : false
+        },
+        mangle: false,
+        output: {
+          beautify: true
         },
         compress: {
           drop_console: isProduction,
