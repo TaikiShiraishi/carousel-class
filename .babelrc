@@ -1,3 +1,16 @@
 {
-  "presets": ["es2015"]
-}
+  "presets": [
+    [
+      "env",
+      {
+        "target": {
+          "browsers": ["> 5% in JP"]
+      },
+      "modules": false,
+      "useBuiltIns": true
+      }
+    ]
+  ],
+  "plugins": [
+    "transform-runtime"
+  ]
