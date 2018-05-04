@@ -8,27 +8,47 @@
   }
 
   &-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-slide {
     position: relative;
     width: 500px;
-    margin: 0 auto;
+    overflow: hidden;
   }
 
   &-list {
     position: relative;
     display: flex;
-    overflow: hidden;
     margin: 0;
     padding: 0;
     list-style: none;
+    transition: {
+      property: transform;
+      duration: 0.3s;
+      timing-function: ease-out;
+    }
   }
 
   &-item {
-    display: none;
+    display: block;
     width: 100%;
+    height: 400px;
     flex-shrink: 0;
+    box-sizing: border-box;
+    background: {
+      color: #ccc;
+    }
+    border: {
+      color: #000;
+      style: solid;
+      width: 3px;
+    }
 
     &.st-active {
-      display: block;
+      outline: #f00;
     }
 
     &.st-next {
@@ -40,7 +60,7 @@
 
   $w-button: 30;
   &-button {
-    position: absolute;
+    // position: absolute;
     top: 50%;
     width: #{$w-button}px;
     height: #{$w-button}px;
@@ -57,11 +77,11 @@
     }
 
     &.__left {
-      left: -#{$w-button + 10}px;
+      // left: -#{$w-button + 10}px;
     }
 
     &.__right {
-      right: -#{$w-button + 10}px;
+      // right: -#{$w-button + 10}px;
     }
   }
 
