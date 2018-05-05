@@ -93,13 +93,7 @@ class Carousel {
     const listLeftPosition = this.list.getBoundingClientRect().left;
     const firstItemLeftPosition = this.firstItem.getBoundingClientRect().left;
     const initPosition = firstItemLeftPosition - listLeftPosition;
-    this.list.setAttribute(
-      "style",
-      `transform: translate3d(-${initPosition}px, 0, 0`
-    );
-    this.firstItem.classList.add("st-active");
-    this.firstItem.setAttribute("tabindex", "0");
-    this.firstItem.setAttribute("aria-hidden", "false");
+    this.counter(1, initPosition, false);
   }
 
   start() {

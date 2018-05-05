@@ -1,7 +1,7 @@
 class CarouselAnimate {
   constructor(list) {
     this.list = list;
-    this.count = 1;
+    this.count = 0;
     this.tempCount = 0;
     this.setBind();
   }
@@ -11,6 +11,7 @@ class CarouselAnimate {
   }
 
   counter(count, x, isAnimation) {
+    if (this.count === count) return;
     this.tempCount = this.count;
     this.count = count;
     this.setPositionX(x, isAnimation);
