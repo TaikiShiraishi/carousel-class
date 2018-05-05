@@ -1,5 +1,7 @@
+import CarouselAnimate from "./CarouselAnimate";
+
 class Carousel {
-  constructor(config) {
+  constructor() {
     this.list = document.getElementById("js-carousel-list");
     this.rightButton = document.getElementById("js-carousel-right-button");
     this.leftButton = document.getElementById("js-carousel-left-button");
@@ -7,11 +9,11 @@ class Carousel {
     this.initItemLength = this.items.length;
     this.firstItem = this.items.item(0);
     this.itemWidth = this.firstItem.getBoundingClientRect().width;
-    this.config = config || {};
-    this.count = 1;
     this.allItems = {};
     this.allItemsLength = 0;
     this.isAnimating = false;
+    this.carouselAnimate = new CarouselAnimate(this.list);
+    this.counter = this.carouselAnimate.counter;
   }
 
   // 時間で進む
@@ -19,78 +21,62 @@ class Carousel {
   // 右ボタンクリックで進む
   rightButtonClick() {
     if (this.isAnimating) return;
-    this.count += 1;
-    this.animteSlide("right");
+    const count = this.carouselAnimate.count + 1;
+    this.animteSlide(count);
   }
 
   // 左ボタンクリックで戻る
   leftButtonClick() {
     if (this.isAnimating) return;
-    this.count -= 1;
-    this.animteSlide("left");
+    const count = this.carouselAnimate.count - 1;
+    this.animteSlide(count);
   }
 
   /**
    *
-   * @param {String} direction - 進行方向
    * @param {Number} element - 何番目のアイテムを表示するか
    */
-  animteSlide(direction) {
-    const x = this.itemWidth * this.count;
-    const isRight = direction === "right";
-    const activeElement = this.allItems.item(
-      isRight ? this.count - 1 : this.count + 1
-    );
-    activeElement.classList.remove("st-active");
+  animteSlide(count) {
+    this.isAnimating = true;
+    const x = this.itemWidth * count;
 
-    let setActiveClass = () => {
-      this.allItems.item(this.count).classList.add("st-active");
-      console.log(this.count);
-      // const nextActiveElement = isRight
-      //   ? activeElement.nextElementSibling
-      //   : activeElement.previousElementSibling;
-      // nextActiveElement.classList.add("st-active");
-      // console.log(nextActiveElement);
-      this.list.removeEventListener("transitionend", setActiveClass);
-    };
+    this.counter(count, x, true);
 
     // カウントが初期リストアイテムの最大値を超えたら
     let overMax = () => {
-      if (this.count > this.initItemLength) {
-        this.count = 1;
-        this.list.style.transition = "none";
-        this.list.style.transition = "";
-        this.list.removeEventListener("transitionend", overMax);
+      if (count > this.initItemLength) {
+        const minCount = 1;
+        const loopX = this.itemWidth;
+        this.counter(minCount, loopX, false);
       }
+      this.list.removeEventListener("transitionend", overMax);
     };
 
     // カウントが初期リストアイテム最小値を下回ったら
     let underMin = () => {
-      if (this.count < 1) {
-        this.count = this.initItemLength;
-        this.list.style.transition = "none";
-        this.list.style.transition = "";
-        this.list.removeEventListener("transitionend", underMin);
+      if (count < 1) {
+        const maxCount = this.initItemLength;
+        const loopX = this.itemWidth * (this.allItemsLength - 1);
+        this.counter(maxCount, loopX, false);
       }
+      this.list.removeEventListener("transitionend", underMin);
+    };
+
+    let offFlag = () => {
+      this.isAnimating = false;
     };
 
     overMax = overMax.bind(this);
     underMin = underMin.bind(this);
-    setActiveClass = setActiveClass.bind(this);
+    offFlag = offFlag.bind(this);
 
     this.list.addEventListener("transitionend", overMax);
     this.list.addEventListener("transitionend", underMin);
-    this.list.addEventListener("transitionend", setActiveClass);
-
-    this.setPositionX(x);
-  }
-
-  setPositionX(x) {
-    this.list.style.transform = `translate3d(-${x}px, 0, 0)`;
+    this.list.addEventListener("transitionend", offFlag);
   }
 
   // ループ用の複製を作る
-  async addClone() {
+  addClone() {
     const { items } = this;
     const firstElement = items.item(0).cloneNode(true);
     const lastElement = items.item(items.length - 1).cloneNode(true);
@@ -99,6 +85,7 @@ class Carousel {
     this.list.appendChild(firstElement);
     this.list.insertBefore(lastElement, firstItem);
     this.allItems = this.list.querySelectorAll(".js-carousel-item");
+    this.carouselAnimate.addAllItems(this.allItems);
     this.allItemsLength = this.allItems.length - 1;
   }
 
@@ -111,6 +98,8 @@ class Carousel {
       `transform: translate3d(-${initPosition}px, 0, 0`
     );
     this.firstItem.classList.add("st-active");
+    this.firstItem.setAttribute("tabindex", "0");
+    this.firstItem.setAttribute("aria-hidden", "false");
   }
 
   start() {
